@@ -304,6 +304,7 @@ export default {
 
     interactResetCardPosition() {
       this.interactSetPosition({ x: 0, y: 0, rotation: 0 });
+      this.$emit("resetPosition");
     }
   }
 };
