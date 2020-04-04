@@ -6,7 +6,7 @@ var InteractEventBus = new Vue();
 //
 
 var script = {
-  name: 'Vue2InteractDraggable',
+  name: "Vue2InteractDraggable",
 
   props: {
     interactBlockDragDown: {
@@ -98,7 +98,7 @@ var script = {
     },
 
     interactTransitionString() {
-      if (this.interactIsAnimating) return 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+      if (this.interactIsAnimating) return "transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
 
       return null;
     }
@@ -133,6 +133,7 @@ var script = {
         if (rotation > this.interactMaxRotation) rotation = this.interactMaxRotation;else if (rotation < -this.interactMaxRotation) rotation = -this.interactMaxRotation;
 
         this.interactSetPosition({ x, y, rotation });
+        this.$emit("moving", { x, y, rotation });
       },
 
       onend: () => {
@@ -158,7 +159,7 @@ var script = {
       }
       this.interactUnsetElement();
       this.interactSetPosition({ y: this.interactOutOfSightYCoordinate });
-      this.$emit('draggedDown');
+      this.$emit("draggedDown");
     },
 
     interactDraggedLeft() {
@@ -171,7 +172,7 @@ var script = {
         x: -this.interactOutOfSightXCoordinate,
         rotation: -this.interactMaxRotation
       });
-      this.$emit('draggedLeft');
+      this.$emit("draggedLeft");
     },
 
     interactDraggedRight() {
@@ -184,7 +185,7 @@ var script = {
         x: this.interactOutOfSightXCoordinate,
         rotation: this.interactMaxRotation
       });
-      this.$emit('draggedRight');
+      this.$emit("draggedRight");
     },
 
     interactDraggedUp() {
@@ -194,7 +195,7 @@ var script = {
       }
       this.interactUnsetElement();
       this.interactSetPosition({ y: -this.interactOutOfSightYCoordinate });
-      this.$emit('draggedUp');
+      this.$emit("draggedUp");
     },
 
     interactSetEventBusEvents() {
@@ -202,23 +203,23 @@ var script = {
         if (this.interactEventBusEvents.draggedDown) {
           InteractEventBus.$on(this.interactEventBusEvents.draggedDown, this.interactDraggedDown);
         }
+
         if (this.interactEventBusEvents.draggedLeft) {
           InteractEventBus.$on(this.interactEventBusEvents.draggedLeft, this.interactDraggedLeft);
         }
+
         if (this.interactEventBusEvents.draggedRight) {
           InteractEventBus.$on(this.interactEventBusEvents.draggedRight, this.interactDraggedRight);
         }
+
         if (this.interactEventBusEvents.draggedUp) {
           InteractEventBus.$on(this.interactEventBusEvents.draggedUp, this.interactDraggedUp);
-        }      }
+        }
+      }
     },
 
     interactSetPosition(coordinates) {
-      const {
-        x = 0,
-        y = 0,
-        rotation = 0
-      } = coordinates;
+      const { x = 0, y = 0, rotation = 0 } = coordinates;
 
       this.interactPosition = { x, y, rotation };
     },
@@ -233,15 +234,19 @@ var script = {
         if (this.interactEventBusEvents.draggedDown) {
           InteractEventBus.$off(this.interactEventBusEvents.draggedDown, this.draggedDown);
         }
+
         if (this.interactEventBusEvents.draggedLeft) {
           InteractEventBus.$off(this.interactEventBusEvents.draggedLeft, this.draggedLeft);
         }
+
         if (this.interactEventBusEvents.draggedRight) {
           InteractEventBus.$off(this.interactEventBusEvents.draggedRight, this.draggedRight);
         }
+
         if (this.interactEventBusEvents.draggedUp) {
           InteractEventBus.$off(this.interactEventBusEvents.draggedUp, this.draggedUp);
-        }      }
+        }
+      }
     },
 
     interactResetCardPosition() {
